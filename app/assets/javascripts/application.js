@@ -12,7 +12,13 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require_tree .
+
 //= require jquery
 //= require bootstrap-sprockets
+
 //= require bootstrap-datepicker
+var data = {'data-format': 'yyyy-MM-dd hh:mm:ss' };
+$(function(){
+    $('.datepicker').attr(data);
+    $('.datepicker').datetimepicker();
+});
