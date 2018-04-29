@@ -27,8 +27,17 @@ class TodolistsController < ApplicationController
   end
 
   def destroy
-    @todolist.destroy
-    redirect_to todolists_url
+    @todolist = Todolist.find(params[:id])
+    if Date.today <= Todolist.find(params[:id]).due_date
+      @todolist.destroy
+      flash[:notice] = "Deleted successfully!!"
+      #它的用處在於redirect時，能夠從這一個request傳遞文字訊息到下一個request
+      #這裡我們可以將刪除成功與否回傳至首頁
+      #將notice這個Helper用於 views/layouts/application.html.erb
+      redirect_to todolists_url
+    else
+      redirect_to todolists_url, :notice => "Overdue!! Can't delete!"
+    end
   end
 
   private
