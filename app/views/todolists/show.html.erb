@@ -1,4 +1,4 @@
-<%= @todolist.name %>
-<%= @todolist.due_date %>
-<%= simple_format(@todolist.note) %>
-<%= link_to 'Back to index', todolists_path %>
+<h1><%= @todolist.name %></h1>
+<h1>Due date：<%= @todolist.due_date %></h1>
+<h1><%= simple_format(@todolist.note) %></h1>
+<h1><%= link_to 'Back to index', todolists_path %></h1>

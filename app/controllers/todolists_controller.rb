@@ -1,5 +1,5 @@
 class TodolistsController < ApplicationController
-  before_action :set_todolist, :only => [:show, :edit, :update, :destroy]
+  before_action :set_todolist, :only => [:show, :edit, :update, :destroy, :completed]
 
   def index
     @todolists = Todolist.all
@@ -36,8 +36,18 @@ class TodolistsController < ApplicationController
       #將notice這個Helper用於 views/layouts/application.html.erb
       redirect_to todolists_url
     else
-      redirect_to todolists_url, :notice => "Overdue!! Can't delete!"
+      redirect_to todolists_url, :notice => "Overdue!! It can't delete!"
     end
+  end
+
+  def complete
+    @todolist = Todolist.find(params[:id])
+    if @todolist.completed == false
+      @todolist.update_attribute(:completed, true)
+    else
+      @todolist.update_attribute(:completed, false)
+    end
+    redirect_to todolists_path(@todolist)
   end
 
   private
@@ -47,7 +57,7 @@ class TodolistsController < ApplicationController
   end
 
   def todolist_params
-    params.require(:todolist).permit(:name, :due_date, :note)
+    params.require(:todolist).permit(:name, :due_date, :note, :completed)
   end
 
 end

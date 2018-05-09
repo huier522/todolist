@@ -3,6 +3,7 @@
 <table class="table table-striped table-condensed">
   <thead>
     <tr>
+      <th>Completed</th>
       <th>Task</th>
       <th>Due date</th>
       <th>Details</th>
@@ -13,14 +14,41 @@
     <tbody>
       <% @todolists.each do |todolist| %>
         <tr>
-          <td><%= todolist.name %></td>
-          <td><%= todolist.due_date %></td>
-          <td><%= link_to 'Show', todolist_path(todolist) %></td>
-          <td><%= link_to 'Edit', edit_todolist_path(todolist) %></td>
-          <td><%= link_to 'Destroy', todolist_path(todolist), method: :delete, data:{ confirm: "Are you sure?" } %></td>
+          <% if todolist.completed %>
+            <td>
+              <%= link_to complete_todolist_path(todolist), method: :patch do %>
+                <span class="glyphicon glyphicon-check"></span>
+              <% end %>
+            </td>
+          <% else %>
+            <td>
+              <%= link_to complete_todolist_path(todolist), method: :patch do %>
+                <span class="glyphicon glyphicon-unchecked"></span>
+              <% end %>
+            </td>
+          <% end %>
+            <td><%= todolist.name %></td>
+            <td><%= todolist.due_date %></td>
+            <td>
+              <%= link_to todolist_path(todolist) do %>
+                <span class="glyphicon glyphicon-info-sign"></span>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to edit_todolist_path(todolist) do %>
+                <span class="glyphicon glyphicon-edit"></span>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to todolist_path(todolist), method: :delete, data:{ confirm: "Are you sure?" } do %>
+                <span class="glyphicon glyphicon-remove"></span>
+              <% end %>
+            </td>
         </tr>
       <% end %>
     </tbody>
 </table>
 
-<%= link_to 'New Task', new_todolist_path %>
+<%= link_to new_todolist_path, class: "btn btn-success" do %>
+  New Tesk
+<% end %>

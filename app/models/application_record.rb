@@ -7,5 +7,5 @@ class ApplicationRecord < ActiveRecord::Base
       errors.add(:due_date, "can't be in the pest!")
     end
   end
-
+  
 end
